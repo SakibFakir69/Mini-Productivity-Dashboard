@@ -2,7 +2,7 @@ import React from "react";
 
 function Card({ logo, title, description }) {
   return (
-    <div className="bg-slate-950 min-h-[200px]  hover:bg-teal-300/10 duration-100 delay-100">
+    <div className="bg-slate-950 min-h-[200px]  hover:bg-teal-300/10 duration-100 delay-100 shadow-xl">
 
       <div className=" border-stone-200 p-4 flex flex-col justify-center items-center gap-y-2">
 
