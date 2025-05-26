@@ -11,27 +11,27 @@ function UserSection() {
 
         {
             id:1,
-            photo:'',
+            photo:'/pexels-olly-846741.jpg',
             name:'John Doe',
             message:'"This dashboard has completely transformed how I manage my day. Simple, effective, and motivating!"'
         },
         {
             id:2,
-            photo:'',
+            photo:'/pexels-moose-photos-170195-1036623 (1).jpg',
             name:' Jane Appleseed',
             message:'"Setting and tracking goals has never been easier. The daily quotes are a fantastic bonus!"'
         },
         {
             id:3,
-            photo:'',
+            photo:'/pexels-olly-839011.jpg',
             name:'Peter Miller',
 
             message:'"A clean and intuitive interface that helps me focus on what matters most. Highly recommended!"'
         },
         {
             id:4,
-            photo:'',
-            name:'- Lisa Smith',
+            photo:'/pexels-olly-733872.jpg',
+            name:' Lisa Smith',
             message:"Finally, a productivity tool that isn't overwhelming. It has everything I need without the clutter"
 
         }
@@ -39,7 +39,7 @@ function UserSection() {
 
 
   return (
-    <div className='p-3 py-22'>
+    <div className='p-3 py-22 '>
         <h2 className='text-white font-semibold text-2xl mb-3 text-center'>What Our Users Say</h2>
 
 
