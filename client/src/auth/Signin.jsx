@@ -1,48 +1,86 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 function Signin() {
+  // react-hook-form
 
+  const {
+    register,
+    formState: { errors },
 
-
+    watch,
+    handleSubmit,
+  } = useForm();
+  const onSubmit = (data) => console.log(data);
 
   return (
-    <div>
-      <div className="hero bg-base-200 min-h-screen">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Login now!</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
-          </div>
-          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-            <form className="card-body">
-              <fieldset className="fieldset">
+    <div className="min-h-screen  bg-slate-950 w-full">
+      <section className="flex justify-center items-center py-40 w-full">
+        <div className="card bg-slate-300  w-full max-w-sm shrink-0 shadow-2xl">
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+            <fieldset className="fieldset">
+              <div>
                 <label className="label">Email</label>
-                <input type="email" className="input" placeholder="Email" />
+                <input
+                  type="email"
+                  placeholder="Enter your Gmail"
+                  className="input focus:outline-none focus:border-none focus:ring-0"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Invalid email address",
+                    },
+                  })}
+                />
+                {errors.email && (
+                  <p className="text-red-600 text-sm mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
                 <label className="label">Password</label>
                 <input
                   type="password"
-                  className="input"
                   placeholder="Password"
+                  className="input focus:outline-none focus:border-none focus:ring-0"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                  })}
                 />
-                <div>
-                  <a className="link link-hover">Forgot password?</a>
-                </div>
-                <button className="btn btn-neutral mt-4">Login</button>
-              </fieldset>
-            </form>
+                {errors.password && (
+                  <p className="text-red-600 text-sm mt-1">
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
 
-            <div className="mt-6">
-              <h3>You have not account <Link to={'/auth/signup'}>Sign up</Link></h3>
+              <button className="btn btn-neutral mt-4">Login</button>
+            </fieldset>
+          </form>
 
-            </div>
+          {/* or */}
+
+          <div className="text-center mb-5">
+            <div className="divider divider-success -mt-3 mb-3">or</div>
+            <button className="btn btn-accent">Goole login </button>
+
+            <p className="text-xl mt-4">
+              You have no account{" "}
+              <Link to="/auth/signup" className="text-blue-600 underline">
+                Sign up
+              </Link>
+            </p>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

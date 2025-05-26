@@ -29,7 +29,7 @@ const Router = createBrowserRouter([
         element:<AuthLayoutes/>,
         children:[
             {
-                path:'/auth/siginin',
+                path:'/auth/signin',
                 element:<Signin/>
             },
             {
