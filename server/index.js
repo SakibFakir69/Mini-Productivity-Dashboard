@@ -1,14 +1,42 @@
 
 
 require("dotenv").config();
-const Express = require('express')
-const App = Express();
-const Port = process.env.PORT || 5000;
-const Cors =  require('cors')
+const express = require('express');
+
+const {connectionTo_mongoDB} = require('./DB/connectionDB');
+
+connectionTo_mongoDB(process.env.mongoBD_password,
+    {
+        useNewUrlParser: true,
+  useUnifiedTopology: true,
+    }
+)
+.then(()=> console.log("DB connected"))
+.catch(()=> console.log("DB connected failed"))
 
 
-App.use(Cors())
-App.use(Express.json())
+const app = express();
+
+const port = process.env.PORT ||5000;
+
+
+
+
+
+
+
+
+
+
+app.get('/', async (req,res)=>{
+    
+    res.send('Hurray i am running')
+
+} )
+
+app.listen(port,()=> console.log(`MY  server on port ${port}`))
+
+
 
 
 
