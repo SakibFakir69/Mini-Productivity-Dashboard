@@ -8,8 +8,8 @@ import Features from './Features'
 
 function Home() {
   return (
-    <div>
-        <h1>Home</h1>
+    <div className='p-2'>
+     
         <Navbar/>
         <Banner/>
         <Features/>
