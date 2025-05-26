@@ -5,6 +5,7 @@ import React from 'react'
 import Navbar from './Navbar'
 import Banner from './Banner'
 import Features from './Features'
+import UserSection from './UserSection'
 
 function Home() {
   return (
@@ -13,6 +14,7 @@ function Home() {
         <Navbar/>
         <Banner/>
         <Features/>
+        <UserSection/>
 
     </div>
   )

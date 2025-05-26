@@ -61,7 +61,7 @@ function Features() {
 
   return (
     <div>
-        <h1 className='text-white text-xl text-center'>Features</h1>
+        <h1 className='text-white text-2xl text-center font-semibold mb-4'>Key Features</h1>
 
         {/* show data  */}
 
