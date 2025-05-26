@@ -20,12 +20,17 @@ function Signup() {
           
           <div className="card bg-slate-300 w-full max-w-sm shrink-0 shadow-2xl">
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-              <fieldset className="fieldset">
+              <div className="flex gap-y-4 flex-col" >
                 <div>
-                  <label className="label">Name</label>
+                  <label className="label
+
+                  font-medium
+                  
+                  text-black">Name</label>
 
                   <input
                   className="input focus:outline-none focus:border-none focus:ring-0"
+                  placeholder="Enter your name"
 
                     {...register("name", {
                       required: "Name is required",
@@ -39,11 +44,15 @@ function Signup() {
                 </div>
 
                 <div>
-                  <label className="label">Email</label>
+                  <label className="label 
+                  
+                  font-medium
+                  
+                  text-black">Email</label>
                   <input
                    className="input focus:outline-none focus:border-none focus:ring-0"
 
-                    defaultValue="Email"
+                    placeholder="Enter your email"
                     {...register("email", {
                       required: "Enter Your email",
                       pattern: {
@@ -60,11 +69,11 @@ function Signup() {
                 </div>
 
                 <div>
-                  <label className="label">Password</label>
+                  <label className="label font-medium text-black">Password</label>
                   <input
                    className="input focus:outline-none focus:border-none focus:ring-0"
 
-                    defaultValue="Password"
+                    placeholder="Enter your password"
                     {...register("Password", {
                       required: "Password is required",
                       minLength: {
@@ -81,7 +90,7 @@ function Signup() {
                 </div>
 
                 <button className="btn btn-neutral mt-4">Sign Up</button>
-              </fieldset>
+              </div>
             </form>
 
             <div className="-mt-2 flex justify-center items-center flex-col">
@@ -92,7 +101,7 @@ function Signup() {
 
               <p className="mb-6 text-xl">
                 You have already account{" "}
-                <Link to={"/auth/signin"} className="text-blue-600">Sign in </Link>
+                <Link to={"/auth/signin"} className="text-blue-600 underline">Sign in </Link>
               </p>
 
              

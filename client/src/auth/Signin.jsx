@@ -19,7 +19,7 @@ function Signin() {
       <section className="flex justify-center items-center py-40 w-full">
         <div className="card bg-slate-300  w-full max-w-sm shrink-0 shadow-2xl">
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-            <fieldset className="fieldset">
+            <div className="flex gap-y-4 flex-col" >
               <div>
                 <label className="label">Email</label>
                 <input
@@ -63,7 +63,7 @@ function Signin() {
               </div>
 
               <button className="btn btn-neutral mt-4">Login</button>
-            </fieldset>
+            </div>
           </form>
 
           {/* or */}
