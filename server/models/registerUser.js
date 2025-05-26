@@ -27,7 +27,7 @@ const register_user_schema = new mongoes.Schema({
     timestamps: true
 })
 
-module.exports = register_user_schema("User",register_user_schema);
+module.exports =mongoes.model("User",register_user_schema);
 // User is a collection 
 
 

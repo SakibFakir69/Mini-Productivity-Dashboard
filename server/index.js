@@ -19,6 +19,30 @@ const app = express();
 
 const port = process.env.PORT ||5000;
 
+const register_user_schema = require('./models/registerUser');
+
+
+
+
+
+// login
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
