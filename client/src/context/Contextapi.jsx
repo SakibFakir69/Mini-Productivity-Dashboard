@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext ,useState,useEffect} from "react";
 
 import { auth } from "../firebase/config";
 
@@ -40,13 +40,13 @@ function Contextapi({ children }) {
 
   const signIniWithEmailAndPassword = (email, password) => {
     setloading(true);
-    return signInWithEmailAndPassword(Auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password);
   };
   // sign with google
   const Provider = new GoogleAuthProvider();
   const signInWithGoole = () => {
     setloading(true);
-    return signInWithPopup(Auth, Provider);
+    return signInWithPopup(auth, Provider);
   };
   // siginin
 

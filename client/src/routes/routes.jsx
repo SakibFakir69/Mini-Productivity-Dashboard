@@ -6,6 +6,7 @@ import Home from '../page/home/Home';
 import AuthLayoutes from '../layouts/AuthLayoutes';
 import Signup from '../auth/Signup';
 import Signin from '../auth/Signin';
+import TaskBoard from '../components/taskboard/TaskBoard';
 
 
 const Router = createBrowserRouter([
@@ -17,6 +18,10 @@ const Router = createBrowserRouter([
             {
                 path:'/',
                 element: <Home/>
+            },
+            {
+                path:'/taskboard',
+                element: <TaskBoard/>
             }
         ]
         

@@ -1,6 +1,7 @@
 
 
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Banner() {
   return (
@@ -20,9 +21,9 @@ function Banner() {
             {/* button */}
             <div className='flex justify-center gap-x-5'>
 
-                <button className='p-3 px-10 rounded  bg-blue-600 font-medium text-white hover:bg-transparent duration-300 delay-200 hover:border-stone-300'>Get Started</button>
+                <Link to={'/taskboard'} className='p-3 px-10 rounded  bg-blue-600 font-medium text-white hover:bg-transparent duration-300 delay-200 hover:border-stone-300 cursor-pointer'>Get Started</Link>
 
-                <button className='p-3 px-10 rounded bg-transparent font-medium text-white border border-stone-400/50 hover:border-stone-300 delay-200 duration-300'>Learn More</button>
+                <a target='_blank' href='https://www.ntaskmanager.com/blog/task-management-skills/' className='p-3 px-10 rounded bg-transparent font-medium text-white border border-stone-400/50 hover:border-stone-300 delay-200 duration-300 cursor-pointer' >Learn More</a>
             </div>
 
 
