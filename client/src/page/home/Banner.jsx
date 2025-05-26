@@ -10,9 +10,9 @@ function Banner() {
 
             <div className='p-6 flex justify-center items-center flex-col gap-y-2'>
 
-                <h2 className='text-white text-6xl font-semibold'>Organize Your Day, Achieve Your Goals</h2>
+                <h2 className='text-white md:text-6xl font-semibold  text-4xl'>Organize Your Day, Achieve Your Goals</h2>
 
-                <p className='text-stone-300 font-medium'>
+                <p className='text-stone-300 md:font-medium'>
                     Your simple and powerful tool for managing tasks, setting goals, and staying motivated.
                 </p>
             </div>
