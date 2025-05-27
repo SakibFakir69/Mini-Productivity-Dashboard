@@ -30,7 +30,7 @@ function Signin() {
 
     signIniWithEmailAndPassword(email, password)
       .then((res) => {
-        console.log(res.data);
+  
         toast.success("Sucessfully Sign Up!");
         goHome("/");
       })
@@ -56,7 +56,7 @@ function Signin() {
 
   return (
     <div className="min-h-screen  bg-slate-950 w-full">
-      <ToastContainer />
+      <ToastContainer position="top-center" autoClose={2000} />
       <section className="flex justify-center items-center py-40 w-full">
         <div className="card bg-slate-300  w-full max-w-sm shrink-0 shadow-2xl">
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">

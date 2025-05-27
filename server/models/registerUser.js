@@ -1,5 +1,5 @@
 
-const mongoes = require('mongoose');
+const mongooes = require('mongoose');
 
 
 
@@ -7,7 +7,7 @@ const mongoes = require('mongoose');
 
 
 
-const register_user_schema = new mongoes.Schema({
+const register_user_schema = new mongooes.Schema({
 
     name:{
         type : String,
@@ -27,7 +27,7 @@ const register_user_schema = new mongoes.Schema({
     timestamps: true
 })
 
-module.exports =mongoes.model("User",register_user_schema);
+module.exports =mongooes.model("User",register_user_schema);
 // User is a collection 
 
 

@@ -17,7 +17,7 @@ function Privateroute({children}) {
         return children;
     }
 
-  return <Navigate to={'/'}/>
+  return <Navigate to={'/auth/signin'}/>
 }
 
 export default Privateroute
