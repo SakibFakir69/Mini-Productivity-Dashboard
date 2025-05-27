@@ -1,5 +1,6 @@
 import React from "react";
 import NavbarTaskboard from "../navbar/NavbarTaskboard";
+import { NavLink, Outlet } from "react-router-dom";
 
 function TaskBoard() {
   // navbar
@@ -20,6 +21,7 @@ function TaskBoard() {
 
         <aside
           className="text-white min-h-screen bg-yellow-200 w-64
+          absolute md:relative
         left-0
         top-0
 
@@ -27,7 +29,8 @@ function TaskBoard() {
         
         -translate-x-64 md:translate-x-0 transition-transform duration-300"
         >
-          <li>task board</li>
+          <NavLink to={'/taskboard'}>Task Board</NavLink>
+
           <li>Motivational quote</li>
           <li>dashboard</li>
           <li>profile</li>
@@ -36,8 +39,8 @@ function TaskBoard() {
 
         {/* outlet */}
 
-        <aside>
-            <h1 className="text-white">Outlet</h1>
+        <aside className="border border-white w-full">
+            <Outlet/>
         </aside>
 
 

@@ -8,6 +8,7 @@ import Signup from '../auth/Signup';
 import Signin from '../auth/Signin';
 import TaskBoard from '../components/taskboard/TaskBoard';
 import Privateroute from '../private/Privateroute';
+import Task from '../page/Task';
 
 
 const Router = createBrowserRouter([
@@ -22,7 +23,13 @@ const Router = createBrowserRouter([
             },
             {
                 path:'/taskboard',
-                element:<Privateroute><TaskBoard/></Privateroute>
+                element:<Privateroute><TaskBoard/></Privateroute>,
+                children:[
+                    {
+                        path:'/taskboard',
+                        element:<Task/>
+                    }
+                ]
             }
         ]
         
