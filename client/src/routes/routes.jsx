@@ -9,6 +9,7 @@ import Signin from '../auth/Signin';
 import TaskBoard from '../components/taskboard/TaskBoard';
 import Privateroute from '../private/Privateroute';
 import Task from '../page/Task';
+import Zenquotes from '../services/Zenquotes';
 
 
 const Router = createBrowserRouter([
@@ -28,6 +29,12 @@ const Router = createBrowserRouter([
                     {
                         path:'/taskboard',
                         element:<Task/>
+                    },
+
+                    {
+                        path:'/taskboard/zenquotes',
+                        element:<Zenquotes/>
+
                     }
                 ]
             }

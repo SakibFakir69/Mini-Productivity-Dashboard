@@ -29,11 +29,14 @@ function TaskBoard() {
         
         -translate-x-64 md:translate-x-0 transition-transform duration-300"
         >
-          <NavLink to={'/taskboard'}>Task Board</NavLink>
+         <nav className="flex flex-col gap-y-6">
+           <NavLink to={'/taskboard'}>Task Board</NavLink>
 
-          <li>Motivational quote</li>
+          <NavLink to={'/taskboard/zenquotes'}>Motivational quote</NavLink>
           <li>dashboard</li>
           <li>profile</li>
+         </nav>
+
         </aside>
 
 
