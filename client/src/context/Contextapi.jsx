@@ -22,7 +22,7 @@ function Contextapi({ children }) {
 
   let signUp = (email, password) => {
     setloading(true);
-    return createUserWithEmailAndPassword(Auth, email, password);
+    return createUserWithEmailAndPassword(auth, email, password);
   };
   // sign up with email and password
 
@@ -36,14 +36,15 @@ function Contextapi({ children }) {
     setloading(true);
     return signOut(auth);
   };
-  // sign in with email
+  // sign out
 
   const signIniWithEmailAndPassword = (email, password) => {
     setloading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
+
   // sign with google
-  const Provider = new GoogleAuthProvider();
+  
   const signInWithGoole = () => {
     setloading(true);
     return signInWithPopup(auth, Provider);
@@ -66,6 +67,7 @@ function Contextapi({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setuser(currentUser);
+      setloading(false);
     });
 
     return () => unsubscribe();

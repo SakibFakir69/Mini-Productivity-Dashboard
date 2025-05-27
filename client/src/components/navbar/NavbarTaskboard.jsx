@@ -46,7 +46,7 @@ function NavbarTaskboard() {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">Mini Productivity Dashboard</a>
+          <a className="flex  justify-center items-center text-xl"> <img src={'https://img.icons8.com/color-glass/48/task.png'} className="md:size-10 size-6"/>  <p className="hidden md:inline ml-2">Mini Productivity Dashboard</p> </a>
         </div>
         <div className="navbar-center hidden lg:flex"></div>
 

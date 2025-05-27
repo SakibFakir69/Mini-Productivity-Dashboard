@@ -43,6 +43,11 @@ const Router = createBrowserRouter([
             }
         ]
 
+    },
+
+    {
+        path :"*",
+        element: <h4 className='text-4xl flex justify-center items-center'>404</h4>
     }
 
 

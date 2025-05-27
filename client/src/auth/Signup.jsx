@@ -11,7 +11,10 @@ function Signup() {
     watch,
     handleSubmit,
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) =>{
+     console.log(data)
+
+  }
 
   return (
     <div className="bg-slate-950">
