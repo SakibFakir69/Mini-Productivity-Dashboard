@@ -4,7 +4,7 @@ require("dotenv").config();
 const express = require('express');
 
 const cors = require('cors')
-
+const axios = require('axios');
 const { connectionTo_mongoDB } = require('./DB/connectionDB');
 
 connectionTo_mongoDB(process.env.MONGO_URI,
@@ -41,7 +41,7 @@ app.post('/api/register', async (req, res) => {
 
     try {
 
-        if ( !name,!email || !password) {
+        if ( !name || !email || !password) {
             return res.status(400).json({ message: 'All fields are required' })
         }
 
@@ -50,7 +50,7 @@ app.post('/api/register', async (req, res) => {
         const exitUser = await register_user_schema.findOne({ email });
 
         if (exitUser) {
-            res.status(400).json({ message: 'User already exists with this email' })
+            return res.status(400).json({ message: 'User already exists with this email' })
         }
 
         const newUser = new register_user_schema({name, email, password });
@@ -86,6 +86,17 @@ app.get('/api/alluser', async(req,res)=>{
 
 
 })
+
+// quote 
+app.get('/api/quotes', async (req, res) => {
+  try {
+    const response = await axios.get('https://zenquotes.io/api/quotes');
+    res.json(response.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to fetch quotes' });
+  }
+});
 
 
 

@@ -8,9 +8,18 @@ function Zenquotes() {
     const [ quotes , setquotes ] = useState([]);
 
     useEffect(()=>{
-        axios.get('https://zenquotes.io/api/quotes')
+        axios.get('http://localhost:5000/api/quotes')
+        .then((res)=>{
+            console.log(res.data);
+            setquotes(res.data);
+        })
+        .catch((error)=>{
+            console.log(error.message)
+        })
 
     },[])
+
+    console.log(quotes);
 
 
   return (
