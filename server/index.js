@@ -27,7 +27,8 @@ const tasksUser = require('./models/Tasks')
 
 app.use(cors({
     origin: "http://localhost:5173",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+
     credentials: true, // if you use cookies or authentication headers
 }));
 
@@ -120,11 +121,68 @@ app.post('/api/tasks', async (req, res) => {
 
 })
 
+// show tasks
+
+app.get('/api/tasks/:email', async (req, res) => {
+
+    const userEmail = req.params.email;
+    console.log(userEmail);
+
+    try {
+        const task = await tasksUser.find({ email: userEmail });
+        res.status(200).json(task);
+    } catch (err) {
+        console.log(err.message);
+
+        res.status(500).json({ message: 'Internal server error' });
+    }
 
 
+})
+
+app.patch("/api/tasks/:id", async (req, res) => {
+    const { id } = req.params;
+    const { iscompleted } = req.body;
+
+    try {
+        const result = await tasksUser.findByIdAndUpdate(
+            id,
+            { iscompleted },
+            { new: true }
+        );
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to update task status" });
+    }
+});
 
 
+// delete post
 
+app.delete('/api/tasks/:id',async(req,res)=>{
+    const id = req.params.id;
+
+    try{
+        const deleteTask = await tasksUser.findByIdAndDelete(id);
+        res.status(200).json({message:'Task deleted'})
+    }catch(error){
+        console.log(error);
+        res.status(500).json({message:'Internal server error'})
+    }
+
+})
+// edit
+
+app.patch('/api/tasksedit/:id', async(req , res)=>{
+    const id = req.params.id;
+    const task = req.body;
+
+    const result = await tasksUser.findByIdAndUpdate(id, task);
+    res.status(200).json(result);
+    res.send(result);
+
+
+})
 
 
 

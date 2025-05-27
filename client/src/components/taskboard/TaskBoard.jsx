@@ -20,7 +20,7 @@ function TaskBoard() {
         {/* side bar */}
 
         <aside
-          className="text-white min-h-screen bg-yellow-200 w-64
+          className="text-white min-h-screen bg-slate-950 w-64
           absolute md:relative
         left-0
         top-0

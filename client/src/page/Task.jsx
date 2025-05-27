@@ -1,22 +1,127 @@
 import axios from "axios";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
-
-
+import useAuth from "../hooks/useAuth";
 
 function Task() {
+  const { user } = useAuth();
 
-    // inlilne edit
+  const [tasks, settasks] = useState([]);
 
+  const [editingTaskId, setEditingTaskId] = useState(null);
+  const [editData, setEditData] = useState({
+    title: "",
+    description: "",
+    frequency: "",
+  });
 
+  const startEdit = (task) => {
+    setEditingTaskId(task._id);
+    setEditData({
+      title: task.title,
+      description: task.description,
+      frequency: task.frequency,
+    });
+  };
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditData({ ...editData, [name]: value });
+  };
+  const saveEdit = (id) => {
+    axios
+      .patch(`http://localhost:5000/api/tasks/${id}`, editData)
+      .then(() => {
+        toast.success("Task updated!");
 
-    // modal
+        // update local state
+        settasks((prev) =>
+          prev.map((task) =>
+            task._id === id ? { ...task, ...editData } : task
+          )
+        );
 
-    const myModal = useRef();
+        setEditingTaskId(null); // exit edit mode
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("Update failed");
+      });
+  };
+  const cancelEdit = () => {
+    setEditingTaskId(null);
+    setEditData({ title: "", description: "", frequency: "" });
+  };
+
+  useEffect(() => {
+    if (!user?.email) return;
+
+    axios
+      .get(`http://localhost:5000/api/tasks/${user?.email}`)
+      .then((res) => {
+        console.log(res.data);
+        settasks(res?.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [user?.email]);
+  console.log(tasks, " tasks");
+
+  //   filter
+  const weeklytasks = tasks.filter((item) => item.frequency === "Weekly");
+  const monthlytasks = tasks.filter((item) => item.frequency === "Monthly");
+
+  //   iscompleted
+  const handleCompleteToggle = (id, currentStatus) => {
+    const updatedStatus = !currentStatus;
+
+    axios
+      .patch(`http://localhost:5000/api/tasks/${id}`, {
+        iscompleted: updatedStatus,
+      })
+
+      .then(() => {
+        // Optional: toast message
+        // toast.success("Task updated!");
+
+        // Update local state
+        settasks((prevTasks) =>
+          prevTasks.map((task) =>
+            task._id === id ? { ...task, iscompleted: updatedStatus } : task
+          )
+        );
+      })
+      .catch((error) => {
+        console.error("Error updating task:", error);
+        toast.error("Failed to update task!");
+      });
+  };
+
+  //   delete
+
+  const deleteTask = (id) => {
+    axios
+      .delete(`http://localhost:5000/api/tasks/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        toast.success("Task Deleted");
+
+        // Remove from local state after deletion
+        settasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.message);
+      });
+  };
+
+  // inlilne edit
+
+  // modal
+
+  const myModal = useRef();
   // task submit
-
-
 
   const {
     register,
@@ -30,36 +135,48 @@ function Task() {
   const onSubmit = (data) => {
     console.log(data);
 
-    axios.post('http://localhost:5000/api/tasks',data)
-    .then((res)=>{
+    const { title, description, frequency } = data;
+
+    const alldata = {
+      title,
+      description,
+      frequency,
+      email: user?.email,
+    };
+
+    axios
+      .post("http://localhost:5000/api/tasks", alldata)
+      .then((res) => {
         console.log(res.data);
-        toast.success('Task add',{autoClose:2000})
-
-
-    })
-    .catch((err)=>{
+        toast.success("Task add", { autoClose: 2000 });
+      })
+      .catch((err) => {
         console.log(err.message);
-        toast.error("task added failed",{autoClose:2000})
-    })
+        toast.error("task added failed", { autoClose: 2000 });
+      });
 
-
-
-    
-
-   if (myModal.current) {
+    if (myModal.current) {
       myModal.current.checked = false;
     }
 
     reset();
+  };
 
+  const useedit = useRef();
 
+  const onEdit = (task) => {
+    axios.patch(`http://localhost:5000/api/tasksedit/${task._id}`);
 
+    if (useedit.current) {
+      useedit.current.checked = false;
+    }
+    console.log("edited");
   };
 
   return (
     <div className="w-full p-4 min-h-screen">
       {/* here implement goal weekly and monthly */}
-      <ToastContainer/>
+      <ToastContainer />
 
       <div className="flex p-2  justify-between">
         <h3 className="text-xl font-semibold text-white">Today's Tasks</h3>
@@ -70,9 +187,17 @@ function Task() {
         </label>
 
         {/* Put this part before </body> tag */}
-        <input type="checkbox" id="my_modal_6" className="modal-toggle" ref={myModal}/>
+        <input
+          type="checkbox"
+          id="my_modal_6"
+          className="modal-toggle"
+          ref={myModal}
+        />
         <div className="modal" role="dialog">
-          <form onSubmit={handleSubmit(onSubmit)} className="modal-box flex flex-col gap-y-2">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="modal-box flex flex-col gap-y-2"
+          >
             <h3 className="text-lg font-bold text-center">Enter Your Task!</h3>
 
             <input
@@ -81,17 +206,15 @@ function Task() {
               className="border px-2 py-1 w-full"
             />
 
-            {
-                errors.title && <p className="text-red-400">Enter title</p>
-            }
+            {errors.title && <p className="text-red-400">Enter title</p>}
             <textarea
               {...register("description", { required: true })}
               placeholder="Enter your descruption"
               className="border px-2  w-full min-h-20"
             />
-            {
-                errors.description && <div className="text-red-400">Enter Description</div>
-            }
+            {errors.description && (
+              <div className="text-red-400">Enter Description</div>
+            )}
 
             <select
               {...register("frequency", { required: true })}
@@ -101,9 +224,9 @@ function Task() {
               <option value="Weekly">Weekly</option>
               <option value="Monthly">Monthly</option>
             </select>
-            {
-                errors.frequency && <p className="text-red-500">Enter frequency</p>
-            }
+            {errors.frequency && (
+              <p className="text-red-500">Enter frequency</p>
+            )}
 
             <div className="modal-action">
               <button type="submit" htmlFor="my_modal_6" className="btn">
@@ -114,20 +237,159 @@ function Task() {
         </div>
       </div>
 
-      <section className="grid grid-cols-2 gap-5">
-        <div>
-          <h2 className="text-white font-xl font-semibold">Weekly Task</h2>
+      <section className="grid grid-cols-2 gap-5 ">
+        <div className="border border-teal-400/10 p-3">
+          <h2 className="text-white font-xl font-semibold text-center">
+            Weekly Task
+          </h2>
 
-          <div className="border border-white min-h-20">
-            <p className="text-white">hello this is my first task</p>
+          <div className="grid grid-cols-1 gap-4">
+            {weeklytasks.map((item, key) => (
+              <div className="border border-teal-400/20  min-h-20  bg-slate-900 shadow-2xl p-2 rounded">
+                {editingTaskId === item._id ? (
+                  <div>
+                    <input
+                      name="title"
+                      value={editData.title}
+                      onChange={handleEditChange}
+                      className="input input-bordered w-full"
+                    />
+                    <textarea
+                      name="description"
+                      value={editData.description}
+                      onChange={handleEditChange}
+                      className="textarea textarea-bordered w-full"
+                    />
+                    <select
+                      name="frequency"
+                      value={editData.frequency}
+                      onChange={handleEditChange}
+                      className="select select-bordered w-full"
+                    >
+                      <option value="Weekly">Weekly</option>
+                      <option value="Monthly">Monthly</option>
+                    </select>
+                    <div className="flex gap-x-2 mt-2">
+                      <button
+                        onClick={() => saveEdit(item._id)}
+                        className="btn btn-success"
+                      >
+                        Save
+                      </button>
+                      <button onClick={cancelEdit} className="btn btn-warning">
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-white font-semibold">{item.title}</p>
+                    <p className="text-stone-200">{item.description}</p>
+                    <input
+                      type="checkbox"
+                      className="size-5"
+                      checked={item.iscompleted}
+                      onChange={() =>
+                        handleCompleteToggle(item._id, item.iscompleted)
+                      }
+                    />
+                    <div className="flex gap-x-5 mt-2">
+                      <button
+                        className="btn btn-info"
+                        onClick={() => startEdit(item)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-error"
+                        onClick={() => deleteTask(item._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
 
-        <div>
-          <h2 className="text-white font-xl font-semibold">Monthly Task</h2>
+        <div className="border border-teal-400/10 p-3">
+          <h2 className="text-white font-xl font-semibold text-center mt-2">
+            Monthly Task
+          </h2>
 
-          <div className="border border-white min-h-20">
-            <p className="text-white">hello this is my first task</p>
+          <div>
+            {monthlytasks.map((item, key) => (
+              <div
+                className="border   min-h-20  bg-slate-900 shadow-2xl border-teal-400 rounded p-5"
+                key={key}
+              >
+                {editingTaskId === item._id ? (
+                  <div>
+                    <input
+                      name="title"
+                      value={editData.title}
+                      onChange={handleEditChange}
+                      className="input input-bordered w-full"
+                    />
+                    <textarea
+                      name="description"
+                      value={editData.description}
+                      onChange={handleEditChange}
+                      className="textarea textarea-bordered w-full"
+                    />
+                    <select
+                      name="frequency"
+                      value={editData.frequency}
+                      onChange={handleEditChange}
+                      className="select select-bordered w-full"
+                    >
+                      <option value="Weekly">Weekly</option>
+                      <option value="Monthly">Monthly</option>
+                    </select>
+                    <div className="flex gap-x-2 mt-2">
+                      <button
+                        onClick={() => saveEdit(item._id)}
+                        className="btn btn-success"
+                      >
+                        Save
+                      </button>
+                      <button onClick={cancelEdit} className="btn btn-warning">
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-white font-semibold">{item.title}</p>
+                    <p className="text-stone-200">{item.description}</p>
+                    <input
+                      type="checkbox"
+                      className="size-5"
+                      checked={item.iscompleted}
+                      onChange={() =>
+                        handleCompleteToggle(item._id, item.iscompleted)
+                      }
+                    />
+                    <div className="flex gap-x-5 mt-2">
+                      <button
+                        className="btn btn-info"
+                        onClick={() => startEdit(item)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-error"
+                        onClick={() => deleteTask(item._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </section>
