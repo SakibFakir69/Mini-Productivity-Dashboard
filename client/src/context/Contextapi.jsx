@@ -16,6 +16,7 @@ export const MycontextProvider = createContext();
 function Contextapi({ children }) {
   const [loading, setloading] = useState(true);
   const [user, setuser] = useState(null);
+  console.log(user);
 
   const provider = new GoogleAuthProvider();
   // provider

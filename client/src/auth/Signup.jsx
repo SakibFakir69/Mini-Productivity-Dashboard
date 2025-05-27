@@ -1,8 +1,21 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import useAuth from "../hooks/useAuth";
 
 function Signup() {
+
+  // redirect
+  const goHome = useNavigate();
+
+  // auth hook
+  const {    signUp,
+    signUpWithGoogle,} =useAuth();
+
+
+
+
   // react-hook-form
 
 
@@ -14,12 +27,42 @@ function Signup() {
     handleSubmit,
   } = useForm();
 
-  
+
 
   const onSubmit = (data) =>{
+
      console.log(data)
 
+     const {name,email,password} = data;
+     signUp(email,password)
+     .then((res)=>{
+      console.log(res.data);
+      goHome('/');
+
+
+     })
+     .catch((error)=>{
+      console.log(error);
+     })
+    
+     
+
   }
+
+  const btnForGoogle = ()=>{
+
+    signUpWithGoogle()
+    .then((res)=>{
+      console.log(res.data);
+      goHome('/')
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
+
+  }
+
+
 
   return (
     <div className="bg-slate-950">
@@ -82,7 +125,7 @@ function Signup() {
                    className="input focus:outline-none focus:border-none focus:ring-0"
 
                     placeholder="Enter your password"
-                    {...register("Password", {
+                    {...register("password", {
                       required: "Password is required",
                       minLength: {
                         value: 6,
@@ -105,7 +148,7 @@ function Signup() {
 
 
                <div className="divider divider-success">or</div>
-              <button className="btn mb-2">Goole Sign up</button>
+              <button className="btn mb-2" onClick={btnForGoogle}>Goole Sign up</button>
 
               <p className="mb-6 text-xl">
                 You have already account{" "}
@@ -120,5 +163,6 @@ function Signup() {
     </div>
   );
 }
+
 
 export default Signup;
