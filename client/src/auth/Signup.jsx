@@ -25,16 +25,16 @@ function Signup() {
   const onSubmit = (data) => {
     console.log(data);
 
-    const { name, email, password } = data;
+    const { email, password } = data;
+    console.log(email,password);
     signUp(email, password)
       .then((res) => {
         // api for user
         axios
-          .post("http://localhost:5000/api/register", {
-            name,
-            email,
-            password,
-          })
+          .post("http://localhost:5000/api/register", 
+            
+            data
+          )
           .then((res) => {
             toast.success("Successfully SignUp!");
 
@@ -61,7 +61,7 @@ function Signup() {
         };
 
         axios
-          .post("http://localhost:5000/api/register", userData)
+          .post("http://localhost:5000/api/register",{ userData})
           .then((response) => {
             toast.success("Successfully Signed Up with Google");
             goHome("/");

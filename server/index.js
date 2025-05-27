@@ -3,9 +3,11 @@
 require("dotenv").config();
 const express = require('express');
 
+const cors = require('cors')
+
 const { connectionTo_mongoDB } = require('./DB/connectionDB');
 
-connectionTo_mongoDB(process.env.mongoBD_password,
+connectionTo_mongoDB(process.env.MONGO_URI,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -22,15 +24,24 @@ const port = process.env.PORT || 5000;
 const register_user_schema = require('./models/registerUser');
 
 
+app.use(cors({
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true, // if you use cookies or authentication headers
+}));
 
+
+app.use(express.json());
 
 app.post('/api/register', async (req, res) => {
 
-    const { name, email, password } = req.body;
+    const user = req.body;
+    const {name,email, password}=user;
+    console.log(user);
 
     try {
 
-        if (!name || !email || !password) {
+        if ( !name,!email || !password) {
             return res.status(400).json({ message: 'All fields are required' })
         }
 
@@ -42,7 +53,7 @@ app.post('/api/register', async (req, res) => {
             res.status(400).json({ message: 'User already exists with this email' })
         }
 
-        const newUser = new register_user_schema({ name, email, password });
+        const newUser = new register_user_schema({name, email, password });
         await newUser.save();
 
 
@@ -55,6 +66,23 @@ app.post('/api/register', async (req, res) => {
         res.status(500).json({ message: 'Server error. Try again later.' })
     }
 
+
+
+})
+
+// user get 
+
+app.get('/api/alluser', async(req,res)=>{
+
+    try{
+
+        const user = await register_user_schema.find();
+
+        res.status(200).json(user);
+    }catch(error){
+        
+        res.status(500).json({message:'Internal server error'})
+    }
 
 
 })
