@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-
+  import { ToastContainer, toast } from 'react-toastify';
 import useAuth from "../hooks/useAuth";
 
 function Signup() {
@@ -54,10 +54,12 @@ function Signup() {
     signUpWithGoogle()
     .then((res)=>{
       console.log(res.data);
-      goHome('/')
+      goHome('/');
+      toast.success("Sucessfully Login")
     })
     .catch((error)=>{
       console.log(error);
+      toast.error(error.message)
     })
 
   }
@@ -67,6 +69,8 @@ function Signup() {
   return (
     <div className="bg-slate-950">
       <div className="hero min-h-screen">
+
+        <ToastContainer/>
 
           
           <div className="card bg-slate-300 w-full max-w-sm shrink-0 shadow-2xl">

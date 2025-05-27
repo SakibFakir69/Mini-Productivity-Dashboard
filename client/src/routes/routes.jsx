@@ -7,6 +7,7 @@ import AuthLayoutes from '../layouts/AuthLayoutes';
 import Signup from '../auth/Signup';
 import Signin from '../auth/Signin';
 import TaskBoard from '../components/taskboard/TaskBoard';
+import Privateroute from '../private/Privateroute';
 
 
 const Router = createBrowserRouter([
@@ -21,7 +22,7 @@ const Router = createBrowserRouter([
             },
             {
                 path:'/taskboard',
-                element: <TaskBoard/>
+                element:<Privateroute><TaskBoard/></Privateroute>
             }
         ]
         

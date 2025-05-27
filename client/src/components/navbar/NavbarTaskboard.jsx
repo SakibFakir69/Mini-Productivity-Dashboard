@@ -1,8 +1,23 @@
 import React from "react";
+import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router-dom";
+  import { ToastContainer, toast } from 'react-toastify';
 
 function NavbarTaskboard() {
+  const { user, signOutHandel } = useAuth();
+  console.log(user);
+
+  const logout = ()=>{
+    toast.success("Log out");
+    signOutHandel();
+
+  }
+
+
+
   return (
     <div>
+      <ToastContainer/>
       <div className="navbar bg-base-100 shadow-sm">
         <div className="navbar-start">
           <div className="dropdown">
@@ -46,7 +61,14 @@ function NavbarTaskboard() {
               </li>
             </ul>
           </div>
-          <a className="flex  justify-center items-center text-xl"> <img src={'https://img.icons8.com/color-glass/48/task.png'} className="md:size-10 size-6"/>  <p className="hidden md:inline ml-2">Mini Productivity Dashboard</p> </a>
+          <a className="flex  justify-center items-center text-xl">
+            {" "}
+            <img
+              src={"https://img.icons8.com/color-glass/48/task.png"}
+              className="md:size-10 size-6"
+            />{" "}
+            <p className="hidden md:inline ml-2">Mini Productivity Dashboard</p>{" "}
+          </a>
         </div>
         <div className="navbar-center hidden lg:flex"></div>
 
@@ -73,10 +95,18 @@ function NavbarTaskboard() {
               <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
             </svg>
           </label>
-          <img src="" className="h-10 w-10 rounded-full"/>
 
+          {user ? (
+            <div className="flex gap-x-4">
+              <img src={user?.photoURL} className="h-10 w-10 rounded-full" />
 
-          <a className="btn">Button</a>
+              <button className="btn" onClick={logout}>Log out</button>
+            </div>
+          ) : (
+            <div>
+              <Link to={"/auth/signin"} className="btn btn-active">Log in </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

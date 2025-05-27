@@ -48,7 +48,7 @@ function Contextapi({ children }) {
   
   const signInWithGoole = () => {
     setloading(true);
-    return signInWithPopup(auth, Provider);
+    return signInWithPopup(auth, provider);
   };
   // siginin
 

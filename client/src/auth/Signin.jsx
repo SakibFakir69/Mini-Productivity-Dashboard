@@ -2,26 +2,16 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "../hooks/useAuth";
+import { ToastContainer, toast } from "react-toastify";
 
 function Signin() {
-
-
   // navigate
   const goHome = useNavigate();
 
   // auth
-  const {  signIniWithEmailAndPassword,
-    signInWithGoole,} = useAuth();
-
-
-
-
-
-
+  const { signIniWithEmailAndPassword, signInWithGoole } = useAuth();
 
   // react-hook-form
-
-
 
   const {
     register,
@@ -30,51 +20,47 @@ function Signin() {
     watch,
     handleSubmit,
   } = useForm();
-       
 
   // email , password
 
-  const onSubmit = (data) =>{ console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
 
-    const {email, password} = data;
+    const { email, password } = data;
 
-    signIniWithEmailAndPassword(email,password)
-    .then((res)=>{
-      console.log(res.data);
-      goHome('/')
-
-    })
-    .catch((error)=>{
-      console.log(error);
-    })
-    
-
-  }
+    signIniWithEmailAndPassword(email, password)
+      .then((res) => {
+        console.log(res.data);
+        toast.success("Sucessfully Sign Up!");
+        goHome("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.message);
+      });
+  };
 
   // google
 
-
-  const btnForGoogle = ()=>{
-
+  const btnForGoogle = () => {
     signInWithGoole()
-    .then((res)=>{
-      console.log(res.data);
-      goHome('/')
-    })
-    .catch((error)=>
-    console.log(error)
-  )
-  }
-
-
-  
+      .then((res) => {
+        console.log(res.data);
+        goHome("/");
+        toast.success("Sucessfully Sign Up!");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
 
   return (
     <div className="min-h-screen  bg-slate-950 w-full">
+      <ToastContainer />
       <section className="flex justify-center items-center py-40 w-full">
         <div className="card bg-slate-300  w-full max-w-sm shrink-0 shadow-2xl">
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-            <div className="flex gap-y-4 flex-col" >
+            <div className="flex gap-y-4 flex-col">
               <div>
                 <label className="label">Email</label>
                 <input
@@ -125,7 +111,9 @@ function Signin() {
 
           <div className="text-center mb-5">
             <div className="divider divider-success -mt-3 mb-3">or</div>
-            <button className="btn btn-accent" onClick={btnForGoogle }>Goole login </button>
+            <button className="btn btn-accent" onClick={btnForGoogle}>
+              Goole login{" "}
+            </button>
 
             <p className="text-xl mt-4">
               You have no account{" "}
