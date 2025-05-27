@@ -30,16 +30,16 @@ function Task() {
   const onSubmit = (data) => {
     console.log(data);
 
-    axios.get('http://localhost:5000/api/tasks',data)
+    axios.post('http://localhost:5000/api/tasks',data)
     .then((res)=>{
         console.log(res.data);
-        toast.success('Task add')
+        toast.success('Task add',{autoClose:2000})
 
 
     })
     .catch((err)=>{
         console.log(err.message);
-        toast.error("task added failed")
+        toast.error("task added failed",{autoClose:2000})
     })
 
 
@@ -98,8 +98,8 @@ function Task() {
               className="border px-2 py-1 w-full"
             >
               <option value="">Set your value</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
+              <option value="Weekly">Weekly</option>
+              <option value="Monthly">Monthly</option>
             </select>
             {
                 errors.frequency && <p className="text-red-500">Enter frequency</p>
