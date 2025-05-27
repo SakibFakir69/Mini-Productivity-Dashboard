@@ -7,11 +7,16 @@ function Zenquotes() {
 
     const [ quotes , setquotes ] = useState([]);
 
+    const [ loading , setloading ] = useState(true);
+
+
     useEffect(()=>{
         axios.get('http://localhost:5000/api/quotes')
         .then((res)=>{
             console.log(res.data);
             setquotes(res.data);
+            setloading(false);
+
         })
         .catch((error)=>{
             console.log(error.message)
@@ -24,13 +29,31 @@ function Zenquotes() {
 
   return (
     <div>
-        <h1 className='text-white text-center text-xl'>Zenquotes</h1>
+        <h1 className='text-white text-center text-xl mt-6 font-semibold'>Zenquotes <span className='text-green-500'>Zone</span></h1>
 
 
-        <section>
+        {
+            loading ? (<div className='w-full'>
+                <span className="loading loading-spinner flex justify-center items-center mx-auto  text-white py-32 w-20 text-center"></span>
+            </div>):
+            (<section className='grid md:grid-cols-3 gap-4 p-4 '>
+
+            {
+                quotes.map((quote, key)=>(
+                    <div key={key} className=' bg-slate-900 min-h-10 p-2 rounded shadow-2xl border border-teal-200/20 hover:bg-slate-900/10 transition delay-100'>
+                        <h2 className='text-white font-medium'>{quote.a}</h2>
+                        
+                        <p className='text-stone-200'>{quote.q}</p>
 
 
-        </section>
+
+                    </div>
+                ))
+            }
+
+
+        </section>)
+        }
 
 
     </div>
