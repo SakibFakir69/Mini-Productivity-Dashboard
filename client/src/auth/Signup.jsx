@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 function Signup() {
   // react-hook-form
+
+
   const {
     register,
     formState: { errors },
@@ -11,6 +13,9 @@ function Signup() {
     watch,
     handleSubmit,
   } = useForm();
+
+  
+
   const onSubmit = (data) =>{
      console.log(data)
 
