@@ -8,6 +8,7 @@ function Task() {
   const { user } = useAuth();
 
   const [tasks, settasks] = useState([]);
+  //   edit
 
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editData, setEditData] = useState({
@@ -148,6 +149,9 @@ function Task() {
       .post("http://localhost:5000/api/tasks", alldata)
       .then((res) => {
         console.log(res.data);
+
+        settasks((prev) => [...prev, res?.data]);
+
         toast.success("Task add", { autoClose: 2000 });
       })
       .catch((err) => {
@@ -162,15 +166,10 @@ function Task() {
     reset();
   };
 
-  const useedit = useRef();
-
-  const onEdit = (task) => {
-    axios.patch(`http://localhost:5000/api/tasksedit/${task._id}`);
-
-    if (useedit.current) {
-      useedit.current.checked = false;
-    }
-    console.log("edited");
+  const modalcancel = () => {
+    // empty value
+    reset();
+    myModal.current.checked = false;
   };
 
   return (
@@ -183,7 +182,7 @@ function Task() {
 
         {/* The button to open modal */}
         <label htmlFor="my_modal_6" className="btn">
-          open modal
+          Add Task
         </label>
 
         {/* Put this part before </body> tag */}
@@ -232,20 +231,30 @@ function Task() {
               <button type="submit" htmlFor="my_modal_6" className="btn">
                 Submit
               </button>
+
+              <button className="btn" onClick={modalcancel}>
+                Cancel
+              </button>
             </div>
           </form>
         </div>
       </div>
 
-      <section className="grid grid-cols-2 gap-5 ">
+      <section className="grid md:grid-cols-2 gap-5 ">
         <div className="border border-teal-400/10 p-3">
           <h2 className="text-white font-xl font-semibold text-center">
             Weekly Task
           </h2>
+          {weeklytasks.length === 0 && (
+            <p className="text-gray-400 text-center">No weekly tasks found</p>
+          )}
 
           <div className="grid grid-cols-1 gap-4">
             {weeklytasks.map((item, key) => (
-              <div className="border border-teal-400/20  min-h-20  bg-slate-900 shadow-2xl p-2 rounded">
+              <div
+                className="border border-teal-400/20  min-h-20  bg-slate-900 shadow-2xl p-2 rounded"
+                key={key}
+              >
                 {editingTaskId === item._id ? (
                   <div>
                     <input
@@ -315,14 +324,21 @@ function Task() {
         </div>
 
         <div className="border border-teal-400/10 p-3">
-          <h2 className="text-white font-xl font-semibold text-center mt-2">
+          <h2 className="text-white font-xl font-semibold text-center mt-2 rounded">
             Monthly Task
           </h2>
 
           <div>
-            {monthlytasks.map((item, key) => (
+            {monthlytasks.length === 0 && (
+              <p className="text-gray-400 text-center">
+                No Monthly tasks found
+              </p>
+            )}
+
+           <div className="grid grid-cols-1 gap-y-4">
+             {monthlytasks.map((item, key) => (
               <div
-                className="border   min-h-20  bg-slate-900 shadow-2xl border-teal-400 rounded p-5"
+                className="border   min-h-20  bg-slate-900 shadow-2xl border-teal-400/20 rounded p-5"
                 key={key}
               >
                 {editingTaskId === item._id ? (
@@ -361,7 +377,7 @@ function Task() {
                     </div>
                   </div>
                 ) : (
-                  <div>
+                  <div className="flex flex-col ">
                     <p className="text-white font-semibold">{item.title}</p>
                     <p className="text-stone-200">{item.description}</p>
                     <input
@@ -390,6 +406,7 @@ function Task() {
                 )}
               </div>
             ))}
+           </div>
           </div>
         </div>
       </section>
