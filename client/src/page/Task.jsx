@@ -1,5 +1,10 @@
+import axios from "axios";
 import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
+
+
+
 function Task() {
 
     // inlilne edit
@@ -25,6 +30,20 @@ function Task() {
   const onSubmit = (data) => {
     console.log(data);
 
+    axios.get('http://localhost:5000/api/tasks',data)
+    .then((res)=>{
+        console.log(res.data);
+        toast.success('Task add')
+
+
+    })
+    .catch((err)=>{
+        console.log(err.message);
+        toast.error("task added failed")
+    })
+
+
+
     
 
    if (myModal.current) {
@@ -40,6 +59,7 @@ function Task() {
   return (
     <div className="w-full p-4 min-h-screen">
       {/* here implement goal weekly and monthly */}
+      <ToastContainer/>
 
       <div className="flex p-2  justify-between">
         <h3 className="text-xl font-semibold text-white">Today's Tasks</h3>

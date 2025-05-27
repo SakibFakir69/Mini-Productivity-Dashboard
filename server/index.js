@@ -26,9 +26,9 @@ const tasksUser = require('./models/Tasks')
 
 
 app.use(cors({
-  origin: "http://localhost:5173",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true, // if you use cookies or authentication headers
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // if you use cookies or authentication headers
 }));
 
 
@@ -37,12 +37,12 @@ app.use(express.json());
 app.post('/api/register', async (req, res) => {
 
     const user = req.body;
-    const {name,email, password}=user;
+    const { name, email, password } = user;
     console.log(user);
 
     try {
 
-        if ( !name || !email || !password) {
+        if (!name || !email || !password) {
             return res.status(400).json({ message: 'All fields are required' })
         }
 
@@ -54,7 +54,7 @@ app.post('/api/register', async (req, res) => {
             return res.status(400).json({ message: 'User already exists with this email' })
         }
 
-        const newUser = new register_user_schema({name, email, password });
+        const newUser = new register_user_schema({ name, email, password });
         await newUser.save();
 
 
@@ -73,16 +73,16 @@ app.post('/api/register', async (req, res) => {
 
 // user get 
 
-app.get('/api/alluser', async(req,res)=>{
+app.get('/api/alluser', async (req, res) => {
 
-    try{
+    try {
 
         const user = await register_user_schema.find();
 
         res.status(200).json(user);
-    }catch(error){
-        
-        res.status(500).json({message:'Internal server error'})
+    } catch (error) {
+
+        res.status(500).json({ message: 'Internal server error' })
     }
 
 
@@ -90,15 +90,35 @@ app.get('/api/alluser', async(req,res)=>{
 
 // quote 
 app.get('/api/quotes', async (req, res) => {
-  try {
-    const response = await axios.get('https://zenquotes.io/api/quotes');
-    res.json(response.data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Failed to fetch quotes' });
-  }
+    try {
+        const response = await axios.get('https://zenquotes.io/api/quotes');
+        res.json(response.data);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to fetch quotes' });
+    }
 });
+// task add api
 
+app.post('/api/tasks', async (req, res) => {
+
+    try {
+        const data = req.body;
+        console.log(data);
+
+        const newTask = new tasksUser(data);
+        await newTask.save();
+
+        res.status(201).json({ message: 'Post added' })
+    }
+    catch (error) {
+        console.log(error.message);
+        res.status(500).json({ message: 'Internal Server error' })
+
+
+    }
+
+})
 
 
 
