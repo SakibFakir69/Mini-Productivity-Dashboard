@@ -9,34 +9,6 @@ function DashBoard() {
 
   const [data, setdata] = useState([]);
 
-  //   const [data2, setdata2] = useState([]);
-
-  //   useEffect(() => {
-  //     const completedTask = api.get(`/api/dashboad?email=${user?.email}`);
-  //     completedTask
-  //       .then((res) => {
-  //         console.log(res.data);
-  //         setdata(res.data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error.data);
-  //       });
-  //   }, [user?.email]);
-
-  //    useEffect(() => {
-  //     const completedTask = api.get(`/api/total-task?email=${user?.email}`);
-  //     completedTask
-  //       .then((res) => {
-  //         console.log(res.data);
-  //         setdata2(res.data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error.data);
-  //       });
-  //   }, [user?.email]);
-
-  //   console.log(data,data2);
-
   useEffect(() => {
     const fetchChartData = async () => {
       try {
@@ -64,12 +36,16 @@ function DashBoard() {
   }, [user?.email]);
 
   return (
-    <div className="border flex justify-center items-center flex-col">
+    <div className=" flex justify-center items-center flex-col">
       <h2 className="text-4xl   mt-5 text-center font-semibold text-white">
         Your Task status
       </h2>
 
-      {data.length==0 && <p className="text-3xl font-semibold text-white text-center">No Task Founed</p>}
+      {data.length == 0 && (
+        <p className="text-3xl font-semibold text-white text-center">
+          No Task Founed
+        </p>
+      )}
       <PieChart width={400} height={400}>
         <Pie
           dataKey="value"

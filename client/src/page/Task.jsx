@@ -253,13 +253,13 @@ function Task() {
       <section className="grid md:grid-cols-2 gap-5 ">
         <div className="border border-teal-400/10 p-3">
           <h2 className="text-white font-xl font-semibold text-center">
-            Weekly Golas
+            Weekly Goals
           </h2>
           {weeklytasks.length === 0 && (
             <p className="text-gray-400 text-center">No weekly tasks found</p>
           )}
 
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-4 ">
             {weeklytasks.map((item, key) => (
               <div
                 className="border border-teal-400/20  min-h-20  bg-slate-900 shadow-2xl p-2 rounded"
@@ -314,7 +314,7 @@ function Task() {
                     />
                     <div className="flex gap-x-5 mt-2">
                       <button
-                        className="btn btn-info"
+                        className="btn btn-info "
                         onClick={() => startEdit(item)}
                       >
                         Edit

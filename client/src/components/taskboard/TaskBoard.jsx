@@ -30,6 +30,7 @@ function TaskBoard() {
         -translate-x-64 md:translate-x-0 transition-transform duration-300"
         >
           <nav className="flex flex-col gap-y-6 p-4 ">
+            
             <NavLink
               className={({ isActive }) =>
                 isActive ? "text-blue-500 font-bold" : "text-white"
@@ -42,13 +43,13 @@ function TaskBoard() {
             <NavLink className={({isActive})=> isActive ?"text-blue-500" : 'text-white'} to={"/taskboard/zenquotes"}>Motivational quote</NavLink>
             <NavLink className={({isActive})=> isActive ?"text-blue-500" : 'text-white'} to={'/taskboard/dashboad'}>dashboard</NavLink>
 
-            <li>profile</li>
+            <NavLink className={({isActive})=> isActive ?"text-blue-500" : 'text-white'}>home</NavLink>
           </nav>
         </aside>
 
         {/* outlet */}
 
-        <aside className="border border-white w-full">
+        <aside className=" w-full">
           <Outlet />
         </aside>
       </section>
