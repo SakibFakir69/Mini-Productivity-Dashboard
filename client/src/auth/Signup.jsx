@@ -31,11 +31,22 @@ function Signup() {
       .then((res) => {
         // api for user
         axios
-          .post("http://localhost:5000/api/register", 
+          .post("http://localhost:5000/api/register-jwt", 
             
             data
           )
           .then((res) => {
+
+            // jwt
+
+
+            const {token,email}= res.data;
+            console.log(token);
+            localStorage.setItem('acess_token',token);
+            localStorage.setItem('user_email',email);
+
+
+
             toast.success("Successfully SignUp!");
 
             console.log(res.data);
@@ -63,6 +74,9 @@ function Signup() {
         axios
           .post("http://localhost:5000/api/register",{ userData})
           .then((response) => {
+
+
+
             toast.success("Successfully Signed Up with Google");
             goHome("/");
           })

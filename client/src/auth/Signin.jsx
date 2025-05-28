@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 function Signin() {
   // navigate
@@ -30,9 +31,19 @@ function Signin() {
 
     signIniWithEmailAndPassword(email, password)
       .then((res) => {
-  
-        toast.success("Sucessfully Sign Up!");
-        goHome("/");
+        axios
+          .post("http://localhost:5000/api/login-jwt")
+          .then((res) => {
+            const { token, email, password } = res.data;
+            console.log(token);
+            localStorage.setItem("token", token);
+            toast.success("Sucessfully Sign Up!");
+            goHome("/");
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error(error.message);
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -45,9 +56,19 @@ function Signin() {
   const btnForGoogle = () => {
     signInWithGoole()
       .then((res) => {
-        console.log(res.data);
-        goHome("/");
-        toast.success("Sucessfully Sign Up!");
+        axios
+          .post("http://localhost:5000/api/login-jwt")
+          .then((res) => {
+            const { token, email, password } = res.data;
+            console.log(token);
+            localStorage.setItem("token", token);
+            toast.success("Sucessfully Sign Up!");
+            goHome("/");
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error(error.message);
+          });
       })
       .catch((error) => {
         toast.error(error.message);

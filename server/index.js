@@ -18,7 +18,7 @@ connectionTo_mongoDB(process.env.MONGO_URI,
 
 
 const app = express();
-
+const jwt = require('jsonwebtoken');
 const port = process.env.PORT || 5000;
 
 const register_user_schema = require('./models/registerUser');
@@ -34,6 +34,116 @@ app.use(cors({
 
 
 app.use(express.json());
+
+
+// jwt
+
+// procted
+
+const privateRoute = (req,res,next)=>{
+
+    const token = req.header('Authorization')?.split(' ')[1];
+    if(!token)
+    {
+        return res.status(401).json({message:'not token, authorization denied'})
+    }
+
+    try{
+        const decode  = jwt.verify(token,  process.env.JWT_SECRET || 'secretkey');
+        req.user=decode;
+        next();
+    }catch(err){
+        res.status(401).json({message:"Token is not valid"})
+    }
+
+}
+
+
+// JWT-based registration (NO password hashing)
+app.post('/api/register-jwt', async (req, res) => {
+  const { name, email, password } = req.body;
+  console.log(name,email , password);
+
+  try {
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    // Check if user already exists
+    const isUserExists = await register_user_schema.findOne({ email });
+    if (isUserExists) {
+      return res.status(400).json({ message: 'Email already exists' });
+    }
+
+    // Create new user (plain password)
+    const newUser = new register_user_schema({ name, email, password });
+    await newUser.save();
+
+    // Create JWT token
+    const token = jwt.sign(
+      { id: newUser._id },
+      process.env.JWT_SECRET || 'secretkey',
+      { expiresIn: '24h' }
+    );
+
+    console.log("token",token);
+    // Return token and email
+    res.status(201).json({ token, email });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error. Try again later.' });
+  }
+});
+
+// login-jwt
+
+
+
+
+app.post('/api/login-jwt', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    if (!email || !password) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    const user = await register_user_schema.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: 'User not found' });
+    }
+
+    // No password hashing used, compare plain-text
+    if (user.password !== password) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET || 'secretkey',
+      { expiresIn: '1h' }
+    );
+
+    res.status(200).json({ token, email: user.email });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.post('/api/register', async (req, res) => {
 
