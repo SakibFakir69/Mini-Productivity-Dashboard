@@ -40,7 +40,8 @@ function TaskBoard() {
             </NavLink>
 
             <NavLink className={({isActive})=> isActive ?"text-blue-500" : 'text-white'} to={"/taskboard/zenquotes"}>Motivational quote</NavLink>
-            <li>dashboard</li>
+            <NavLink className={({isActive})=> isActive ?"text-blue-500" : 'text-white'} to={'/taskboard/dashboad'}>dashboard</NavLink>
+
             <li>profile</li>
           </nav>
         </aside>

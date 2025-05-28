@@ -66,7 +66,7 @@ const privateRoute =async (req,res,next)=>{
 }
 
 
-// JWT-based registration (NO password hashing)
+// 
 app.post('/api/register-jwt', async (req, res) => {
   const { name, email, password } = req.body;
   console.log(name,email , password);
@@ -152,42 +152,42 @@ app.post('/api/login-jwt', async (req, res) => {
 
 
 
-app.post('/api/register', async (req, res) => {
+// app.post('/api/register', async (req, res) => {
 
-    const user = req.body;
-    const { name, email, password } = user;
-    console.log(user);
+//     const user = req.body;
+//     const { name, email, password } = user;
+//     console.log(user);
 
-    try {
+//     try {
 
-        if (!name || !email || !password) {
-            return res.status(400).json({ message: 'All fields are required' })
-        }
+//         if (!name || !email || !password) {
+//             return res.status(400).json({ message: 'All fields are required' })
+//         }
 
-        //    user check
+//         //    user check
 
-        const exitUser = await register_user_schema.findOne({ email });
+//         const exitUser = await register_user_schema.findOne({ email });
 
-        if (exitUser) {
-            return res.status(400).json({ message: 'User already exists with this email' })
-        }
+//         if (exitUser) {
+//             return res.status(400).json({ message: 'User already exists with this email' })
+//         }
 
-        const newUser = new register_user_schema({ name, email, password });
-        await newUser.save();
-
-
-        //    message
-        res.status(201).json({ message: 'User registered successfully' })
+//         const newUser = new register_user_schema({ name, email, password });
+//         await newUser.save();
 
 
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: 'Server error. Try again later.' })
-    }
+//         //    message
+//         res.status(201).json({ message: 'User registered successfully' })
+
+
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({ message: 'Server error. Try again later.' })
+//     }
 
 
 
-})
+// })
 
 // user get 
 
@@ -305,10 +305,38 @@ app.patch('/api/tasksedit/:id', async(req , res)=>{
 
 
 
+// dashboard
+
+app.get('/api/dashboard', async(req,res)=>{
+
+
+    try{
+        const userEmail = req.query.email;
+
+        if(!userEmail)
+        {
+            return res.status(400).json({error:"Email is required"})
+        }
+
+        const count = await tasksUser.countDocuments({
+            email:userEmail,
+            iscompleted:true,
+        })
+
+        res.status(200).json({completedtask:count});
+    }catch(err){
+        console.log(err);
+        res.status(500).json({error:'Server error'})
+    }
+    
 
 
 
+})
 
+
+
+// total add task 
 
 
 
