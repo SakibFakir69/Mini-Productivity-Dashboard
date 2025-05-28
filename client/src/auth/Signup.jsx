@@ -42,7 +42,7 @@ function Signup() {
 
             const {token,email}= res.data;
             console.log(token);
-            localStorage.setItem('acess_token',token);
+            localStorage.setItem('access_token',token);
             localStorage.setItem('user_email',email);
 
 

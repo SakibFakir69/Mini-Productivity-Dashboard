@@ -35,8 +35,9 @@ function Signin() {
           .post("http://localhost:5000/api/login-jwt")
           .then((res) => {
             const { token, email, password } = res.data;
-            console.log(token);
+            console.log(token,email);
             localStorage.setItem("token", token);
+
             toast.success("Sucessfully Sign Up!");
             goHome("/");
           })

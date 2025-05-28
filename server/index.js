@@ -40,17 +40,24 @@ app.use(express.json());
 
 // procted
 
-const privateRoute = (req,res,next)=>{
+const privateRoute =async (req,res,next)=>{
 
     const token = req.header('Authorization')?.split(' ')[1];
+    console.log(token , 'my token');
+    console.log('end')
+      
     if(!token)
     {
+        console.log('error')
         return res.status(401).json({message:'not token, authorization denied'})
     }
+    console.log("tty")
 
     try{
+        console.log("next step")
         const decode  = jwt.verify(token,  process.env.JWT_SECRET || 'secretkey');
         req.user=decode;
+         
         next();
     }catch(err){
         res.status(401).json({message:"Token is not valid"})
@@ -233,7 +240,7 @@ app.post('/api/tasks', async (req, res) => {
 
 // show tasks
 
-app.get('/api/tasks/:email', async (req, res) => {
+app.get('/api/tasks/:email',privateRoute, async (req, res) => {
 
     const userEmail = req.params.email;
     console.log(userEmail);

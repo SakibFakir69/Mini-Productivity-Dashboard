@@ -3,9 +3,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
-
+import api from "../hooks/PrivateAPi";
 function Task() {
   const { user } = useAuth();
+  
 
   const [tasks, settasks] = useState([]);
   //   edit
@@ -56,9 +57,20 @@ function Task() {
 
   useEffect(() => {
     if (!user?.email) return;
+      const token = localStorage.getItem('token') || localStorage.getItem("access_token")
 
     axios
-      .get(`http://localhost:5000/api/tasks/${user?.email}`)
+      .get(`http://localhost:5000/api/tasks/${user?.email}`,
+
+      
+        {
+       
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+        }
+        
+      )
       .then((res) => {
         console.log(res.data);
         settasks(res?.data);
@@ -77,8 +89,8 @@ function Task() {
   const handleCompleteToggle = (id, currentStatus) => {
     const updatedStatus = !currentStatus;
 
-    axios
-      .patch(`http://localhost:5000/api/tasks/${id}`, {
+    api
+      .patch(`api/tasks/${id}`, {
         iscompleted: updatedStatus,
       })
 
@@ -102,8 +114,8 @@ function Task() {
   //   delete
 
   const deleteTask = (id) => {
-    axios
-      .delete(`http://localhost:5000/api/tasks/${id}`)
+    api
+      .delete(`api/tasks/${id}`)
       .then((res) => {
         console.log(res.data);
         toast.success("Task Deleted");
@@ -145,8 +157,8 @@ function Task() {
       email: user?.email,
     };
 
-    axios
-      .post("http://localhost:5000/api/tasks", alldata)
+    api
+      .post("api/tasks", alldata)
       .then((res) => {
         console.log(res.data);
 
