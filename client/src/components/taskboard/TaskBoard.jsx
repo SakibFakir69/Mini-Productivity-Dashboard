@@ -35,16 +35,28 @@ function TaskBoard() {
           <nav className="flex flex-col gap-y-6 p-4 ">
 
             <NavLink
-              className={`${path ==='/taskboard' ? "text-blue-500" : "text-white"}`}
+              className={`${path ==='/taskboard' ? "text-blue-500 flex items-center gap-x-1" : "text-white  flex items-center gap-x-1"}`}
               to={"/taskboard"}
             >
+              <img src={'https://img.icons8.com/color-glass/48/task-completed--v2.png'} className="size-4"/>
               Task Board
             </NavLink>
 
-            <NavLink className={({isActive})=> isActive ?"text-blue-500" : 'text-white'} to={"/taskboard/zenquotes"}>Motivational quote</NavLink>
-            <NavLink className={({isActive})=> isActive ?"text-blue-500" : 'text-white'} to={'/taskboard/dashboad'}>dashboard</NavLink>
+            <NavLink className={({isActive})=> isActive ?"text-blue-500  flex items-center gap-x-1" : ' flex items-center gap-x-1 text-white'} to={"/taskboard/zenquotes"}>
+              <img src={'https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-motivation-work-from-home-flaticons-flat-flat-icons.png'} className="size-4"/>
+              Motivational quote</NavLink>
 
-            <NavLink className={({isActive})=> isActive ?"text-blue-500" : 'text-white'}>home</NavLink>
+
+
+            <NavLink className={({isActive})=> isActive ?"text-blue-500  flex items-center gap-x-1" : ' flex items-center gap-x-1 text-white'} to={'/taskboard/dashboad'}>
+              <img src="https://img.icons8.com/color/48/dashboard-layout.png" className="size-4"/>
+              Dashboard</NavLink>
+
+            <NavLink className={"text-white font-semibold flex  gap-x-1 items-center"} to={'/'}>
+
+            <img src="https://img.icons8.com/ultraviolet/40/home--v1.png" className="size-4"/>
+            
+            Home</NavLink>
           </nav>
         </aside>
 
