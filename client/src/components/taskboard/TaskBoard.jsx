@@ -29,24 +29,27 @@ function TaskBoard() {
         
         -translate-x-64 md:translate-x-0 transition-transform duration-300"
         >
-         <nav className="flex flex-col gap-y-6">
-           <NavLink to={'/taskboard'}>Task Board</NavLink>
+          <nav className="flex flex-col gap-y-6 p-4 ">
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-blue-500 font-bold" : "text-white"
+              }
+              to={"/taskboard"}
+            >
+              Task Board
+            </NavLink>
 
-          <NavLink to={'/taskboard/zenquotes'}>Motivational quote</NavLink>
-          <li>dashboard</li>
-          <li>profile</li>
-         </nav>
-
+            <NavLink className={({isActive})=> isActive ?"text-blue-500" : 'text-white'} to={"/taskboard/zenquotes"}>Motivational quote</NavLink>
+            <li>dashboard</li>
+            <li>profile</li>
+          </nav>
         </aside>
-
 
         {/* outlet */}
 
         <aside className="border border-white w-full">
-            <Outlet/>
+          <Outlet />
         </aside>
-
-
       </section>
     </div>
   );

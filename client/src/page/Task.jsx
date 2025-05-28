@@ -6,7 +6,6 @@ import useAuth from "../hooks/useAuth";
 import api from "../hooks/PrivateAPi";
 function Task() {
   const { user } = useAuth();
-  
 
   const [tasks, settasks] = useState([]);
   //   edit
@@ -57,19 +56,18 @@ function Task() {
 
   useEffect(() => {
     if (!user?.email) return;
-      const token = localStorage.getItem('token') || localStorage.getItem("access_token")
+    const token =
+      localStorage.getItem("token") || localStorage.getItem("access_token");
 
-    axios
-      .get(`http://localhost:5000/api/tasks/${user?.email}`,
+    api
+      .get(
+        `api/tasks/${user?.email}`,
 
-      
         {
-       
-          headers:{
-            Authorization:`Bearer ${token}`
-          }
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-        
       )
       .then((res) => {
         console.log(res.data);
@@ -190,7 +188,7 @@ function Task() {
       <ToastContainer />
 
       <div className="flex p-2  justify-between">
-        <h3 className="text-xl font-semibold text-white">Today's Tasks</h3>
+        <h3 className="text-xl font-semibold text-white">My Goals</h3>
 
         {/* The button to open modal */}
         <label htmlFor="my_modal_6" className="btn">
@@ -255,7 +253,7 @@ function Task() {
       <section className="grid md:grid-cols-2 gap-5 ">
         <div className="border border-teal-400/10 p-3">
           <h2 className="text-white font-xl font-semibold text-center">
-            Weekly Task
+            Weekly Golas
           </h2>
           {weeklytasks.length === 0 && (
             <p className="text-gray-400 text-center">No weekly tasks found</p>
@@ -337,7 +335,7 @@ function Task() {
 
         <div className="border border-teal-400/10 p-3">
           <h2 className="text-white font-xl font-semibold text-center mt-2 rounded">
-            Monthly Task
+            Monthly Goals
           </h2>
 
           <div>
@@ -347,78 +345,81 @@ function Task() {
               </p>
             )}
 
-           <div className="grid grid-cols-1 gap-y-4">
-             {monthlytasks.map((item, key) => (
-              <div
-                className="border   min-h-20  bg-slate-900 shadow-2xl border-teal-400/20 rounded p-5"
-                key={key}
-              >
-                {editingTaskId === item._id ? (
-                  <div>
-                    <input
-                      name="title"
-                      value={editData.title}
-                      onChange={handleEditChange}
-                      className="input input-bordered w-full"
-                    />
-                    <textarea
-                      name="description"
-                      value={editData.description}
-                      onChange={handleEditChange}
-                      className="textarea textarea-bordered w-full"
-                    />
-                    <select
-                      name="frequency"
-                      value={editData.frequency}
-                      onChange={handleEditChange}
-                      className="select select-bordered w-full"
-                    >
-                      <option value="Weekly">Weekly</option>
-                      <option value="Monthly">Monthly</option>
-                    </select>
-                    <div className="flex gap-x-2 mt-2">
-                      <button
-                        onClick={() => saveEdit(item._id)}
-                        className="btn btn-success"
+            <div className="grid grid-cols-1 gap-y-4">
+              {monthlytasks.map((item, key) => (
+                <div
+                  className="border   min-h-20  bg-slate-900 shadow-2xl border-teal-400/20 rounded p-5"
+                  key={key}
+                >
+                  {editingTaskId === item._id ? (
+                    <div>
+                      <input
+                        name="title"
+                        value={editData.title}
+                        onChange={handleEditChange}
+                        className="input input-bordered w-full"
+                      />
+                      <textarea
+                        name="description"
+                        value={editData.description}
+                        onChange={handleEditChange}
+                        className="textarea textarea-bordered w-full"
+                      />
+                      <select
+                        name="frequency"
+                        value={editData.frequency}
+                        onChange={handleEditChange}
+                        className="select select-bordered w-full"
                       >
-                        Save
-                      </button>
-                      <button onClick={cancelEdit} className="btn btn-warning">
-                        Cancel
-                      </button>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Monthly">Monthly</option>
+                      </select>
+                      <div className="flex gap-x-2 mt-2">
+                        <button
+                          onClick={() => saveEdit(item._id)}
+                          className="btn btn-success"
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={cancelEdit}
+                          className="btn btn-warning"
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <div className="flex flex-col ">
-                    <p className="text-white font-semibold">{item.title}</p>
-                    <p className="text-stone-200">{item.description}</p>
-                    <input
-                      type="checkbox"
-                      className="size-5"
-                      checked={item.iscompleted}
-                      onChange={() =>
-                        handleCompleteToggle(item._id, item.iscompleted)
-                      }
-                    />
-                    <div className="flex gap-x-5 mt-2">
-                      <button
-                        className="btn btn-info"
-                        onClick={() => startEdit(item)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="btn btn-error"
-                        onClick={() => deleteTask(item._id)}
-                      >
-                        Delete
-                      </button>
+                  ) : (
+                    <div className="flex flex-col ">
+                      <p className="text-white font-semibold">{item.title}</p>
+                      <p className="text-stone-200">{item.description}</p>
+                      <input
+                        type="checkbox"
+                        className="size-5"
+                        checked={item.iscompleted}
+                        onChange={() =>
+                          handleCompleteToggle(item._id, item.iscompleted)
+                        }
+                      />
+                      <div className="flex gap-x-5 mt-2">
+                        <button
+                          className="btn btn-info"
+                          onClick={() => startEdit(item)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-error"
+                          onClick={() => deleteTask(item._id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
-           </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
