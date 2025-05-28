@@ -165,7 +165,7 @@ function Task() {
       frequency,
       email: user?.email,
     };
-    
+
 
     api
       .post("api/tasks", alldata)
@@ -280,7 +280,7 @@ function Task() {
                   key={key}
                 >
                   {editingTaskId === item._id ? (
-                    <div>
+                    <div className="flex flex-col gap-y-2">
                       <input
                         name="title"
                         value={editData.title}
@@ -375,7 +375,7 @@ function Task() {
                 key={key}
               >
                 {editingTaskId === item._id ? (
-                  <div>
+                  <div className="flex flex-col gap-y-2">
                     <input
                       name="title"
                       value={editData.title}
@@ -463,7 +463,7 @@ function Task() {
                   key={key}
                 >
                   {editingTaskId === item._id ? (
-                    <div>
+                    <div className="flex flex-col gap-y-2">
                       <input
                         name="title"
                         value={editData.title}
