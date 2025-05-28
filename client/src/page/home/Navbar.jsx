@@ -1,6 +1,8 @@
 import React from "react";
 import { PiNotepadDuotone } from "react-icons/pi";
 function Navbar() {
+
+
   return (
     <div className="  ">
       <h2 className="text-white md:text-xl font-medium flex items-center gap-x-3 p-4">

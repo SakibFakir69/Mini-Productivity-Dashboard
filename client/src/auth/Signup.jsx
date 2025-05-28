@@ -31,7 +31,7 @@ function Signup() {
       .then((res) => {
         // api for user
         axios
-          .post("http://localhost:5000/api/register-jwt", 
+          .post("https://server-ruby-theta.vercel.app/api/register-jwt", 
             
             data
           )
@@ -72,7 +72,7 @@ function Signup() {
         };
 
         axios
-          .post("http://localhost:5000/api/register",{ userData})
+          .post("https://server-ruby-theta.vercel.app/api/register",{ userData})
           .then((response) => {
 
 

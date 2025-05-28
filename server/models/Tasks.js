@@ -19,8 +19,8 @@ const taskSchema = new mongooes.Schema({
     ,
     frequency: {
     type: String,
-    enum: ['Weekly', 'Monthly', 'None'],
-    default: 'None',
+    enum: ['Weekly', 'Monthly', 'Daily'],
+    default: 'Daily',
   },
     iscompleted:{
     type:Boolean,

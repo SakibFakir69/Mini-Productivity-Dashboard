@@ -1,10 +1,16 @@
 import React from "react";
 import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
 
 function NavbarTaskboard() {
+
+
+
+
+
+
   const { user, signOutHandel } = useAuth();
   console.log(user);
 
@@ -16,9 +22,7 @@ function NavbarTaskboard() {
   const links = (
     <div className="flex gap-y-5 flex-col ">
       <NavLink
-        className={({ isActive }) =>
-          isActive ? "text-blue-500 font-bold" : "text-white"
-        }
+
         to={"/taskboard"}
       >
         Task Board
@@ -41,13 +45,7 @@ function NavbarTaskboard() {
         dashboard
       </NavLink>
 
-      <NavLink
-        className={({ isActive }) =>
-          isActive ? "text-blue-500" : "text-white"
-        }
-      >
-        home
-      </NavLink>
+      
     </div>
   );
 
@@ -108,7 +106,7 @@ function NavbarTaskboard() {
 
             {/* moon icon */}
             <svg
-              className="swap-off h-10 w-10 fill-current"
+              className="swap-off h-10 w-10 fill-current text-blue-300"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >

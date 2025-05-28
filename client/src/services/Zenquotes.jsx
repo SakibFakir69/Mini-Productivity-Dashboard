@@ -11,7 +11,7 @@ function Zenquotes() {
 
 
     useEffect(()=>{
-        axios.get('http://localhost:5000/api/quotes')
+        axios.get('https://server-ruby-theta.vercel.app/api/quotes')
         .then((res)=>{
             console.log(res.data);
             setquotes(res.data);

@@ -1,8 +1,11 @@
 import React from "react";
 import NavbarTaskboard from "../navbar/NavbarTaskboard";
 import { NavLink, Outlet } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function TaskBoard() {
+    const path = useLocation().pathname;
+    console.log(path);
   // navbar
 
   // sidebar
@@ -30,11 +33,9 @@ function TaskBoard() {
         -translate-x-64 md:translate-x-0 transition-transform duration-300"
         >
           <nav className="flex flex-col gap-y-6 p-4 ">
-            
+
             <NavLink
-              className={({ isActive }) =>
-                isActive ? "text-blue-500 font-bold" : "text-white"
-              }
+              className={`${path ==='/taskboard' ? "text-blue-500" : "text-white"}`}
               to={"/taskboard"}
             >
               Task Board

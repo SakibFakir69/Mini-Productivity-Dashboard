@@ -32,7 +32,7 @@ function Signin() {
     signIniWithEmailAndPassword(email, password)
       .then((res) => {
         axios
-          .post("http://localhost:5000/api/login-jwt")
+          .post("https://server-ruby-theta.vercel.app/api/login-jwt")
           .then((res) => {
             const { token, email, password } = res.data;
             console.log(token,email);
@@ -58,7 +58,7 @@ function Signin() {
     signInWithGoole()
       .then((res) => {
         axios
-          .post("http://localhost:5000/api/login-jwt")
+          .post("https://server-ruby-theta.vercel.app/api/login-jwt")
           .then((res) => {
             const { token, email, password } = res.data;
             console.log(token);

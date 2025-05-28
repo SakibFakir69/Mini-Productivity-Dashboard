@@ -5,6 +5,15 @@ import { ToastContainer, toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
 import api from "../hooks/PrivateAPi";
 function Task() {
+
+
+  // refresh  task auto update
+  // active link 
+  // all function check
+  // bug fix 
+  // remove google
+  // polish input task , update real timetask 
+  // text
   const { user } = useAuth();
 
   const [tasks, settasks] = useState([]);
@@ -31,7 +40,7 @@ function Task() {
   };
   const saveEdit = (id) => {
     axios
-      .patch(`http://localhost:5000/api/tasks/${id}`, editData)
+      .patch(`https://server-ruby-theta.vercel.app/api/tasks/${id}`, editData)
       .then(() => {
         toast.success("Task updated!");
 
@@ -82,6 +91,8 @@ function Task() {
   //   filter
   const weeklytasks = tasks.filter((item) => item.frequency === "Weekly");
   const monthlytasks = tasks.filter((item) => item.frequency === "Monthly");
+  const dailytasks = tasks.filter((item)=> item.frequency==='Daily');
+
 
   //   iscompleted
   const handleCompleteToggle = (id, currentStatus) => {
@@ -154,6 +165,7 @@ function Task() {
       frequency,
       email: user?.email,
     };
+    
 
     api
       .post("api/tasks", alldata)
@@ -229,7 +241,7 @@ function Task() {
               {...register("frequency", { required: true })}
               className="border px-2 py-1 w-full"
             >
-              <option value="">Set your value</option>
+              <option value="Daily">Daily</option>
               <option value="Weekly">Weekly</option>
               <option value="Monthly">Monthly</option>
             </select>
@@ -250,7 +262,104 @@ function Task() {
         </div>
       </div>
 
-      <section className="grid md:grid-cols-2 gap-5 ">
+      <section className="grid md:grid-cols-3 gap-5 ">
+
+
+        <div>
+          <div>
+            <h2 className="text-white ">Daily task</h2>
+          </div>
+
+          {/*  */}
+
+          <div>
+             <div className="grid grid-cols-1 gap-y-4">
+              {dailytasks.map((item, key) => (
+                <div
+                  className="border   min-h-20  bg-slate-900 shadow-2xl border-teal-400/20 rounded p-5"
+                  key={key}
+                >
+                  {editingTaskId === item._id ? (
+                    <div>
+                      <input
+                        name="title"
+                        value={editData.title}
+                        onChange={handleEditChange}
+                        className="input input-bordered w-full"
+                      />
+                      <textarea
+                        name="description"
+                        value={editData.description}
+                        onChange={handleEditChange}
+                        className="textarea textarea-bordered w-full"
+                      />
+                      <select
+                        name="frequency"
+                        value={editData.frequency}
+                        onChange={handleEditChange}
+                        className="select select-bordered w-full"
+                      >
+                        <option value="Daily">Daily</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Monthly">Monthly</option>
+                      </select>
+                      <div className="flex gap-x-2 mt-2">
+                        <button
+                          onClick={() => saveEdit(item._id)}
+                          className="btn btn-success"
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={cancelEdit}
+                          className="btn btn-warning"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col ">
+                      <p className="text-white font-semibold">{item.title}</p>
+                      <p className="text-stone-200">{item.description}</p>
+                      <input
+                        type="checkbox"
+                        className="size-5"
+                        checked={item.iscompleted}
+                        onChange={() =>
+                          handleCompleteToggle(item._id, item.iscompleted)
+                        }
+                      />
+                      <div className="flex gap-x-5 mt-2">
+                        <button
+                          className="btn btn-info"
+                          onClick={() => startEdit(item)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-error"
+                          onClick={() => deleteTask(item._id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            
+          </div>
+
+        </div>
+
+
+
+
+
+
+
         <div className="border border-teal-400/10 p-3">
           <h2 className="text-white font-xl font-semibold text-center">
             Weekly Goals
@@ -285,6 +394,7 @@ function Task() {
                       onChange={handleEditChange}
                       className="select select-bordered w-full"
                     >
+                      <option value="Daily">Daily</option>
                       <option value="Weekly">Weekly</option>
                       <option value="Monthly">Monthly</option>
                     </select>
@@ -301,9 +411,10 @@ function Task() {
                     </div>
                   </div>
                 ) : (
-                  <div>
-                    <p className="text-white font-semibold">{item.title}</p>
+                  <div className="flex flex-col gap-x-5">
+                    <p className="text-white font-semibold text-xl">{item.title}</p>
                     <p className="text-stone-200">{item.description}</p>
+
                     <input
                       type="checkbox"
                       className="size-5"
@@ -371,6 +482,7 @@ function Task() {
                         onChange={handleEditChange}
                         className="select select-bordered w-full"
                       >
+                        <option value="Daily">Daily</option>
                         <option value="Weekly">Weekly</option>
                         <option value="Monthly">Monthly</option>
                       </select>
