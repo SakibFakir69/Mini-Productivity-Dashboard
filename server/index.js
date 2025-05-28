@@ -186,7 +186,7 @@ app.post('/api/tasks', async (req, res) => {
         const newTask = new tasksUser(data);
         await newTask.save();
 
-        res.status(201).json({ message: 'Post added' })
+        res.status(201).json(newTask)
     }
     catch (error) {
         console.log(error.message);

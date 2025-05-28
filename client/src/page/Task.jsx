@@ -200,7 +200,7 @@ function Task() {
       <ToastContainer />
 
       <div className="flex p-2  justify-between">
-        <h3 className="text-xl font-semibold text-white">My Goals</h3>
+        <h3 className="text-xl font-semibold text-white">Your Task</h3>
 
         {/* The button to open modal */}
         <label htmlFor="my_modal_6" className="btn">
@@ -267,7 +267,7 @@ function Task() {
 
         <div>
           <div>
-            <h2 className="text-white ">Daily task</h2>
+            <h2 className="text-white font-semibold text-center mb-4">Daily task</h2>
           </div>
 
           {/*  */}
@@ -361,7 +361,7 @@ function Task() {
 
 
         <div className="border border-teal-400/10 p-3">
-          <h2 className="text-white font-xl font-semibold text-center">
+          <h2 className="text-white font-xl font-semibold text-center mb-4">
             Weekly Goals
           </h2>
           {weeklytasks.length === 0 && (
@@ -445,7 +445,7 @@ function Task() {
         </div>
 
         <div className="border border-teal-400/10 p-3">
-          <h2 className="text-white font-xl font-semibold text-center mt-2 rounded">
+          <h2 className="text-white font-xl font-semibold text-center mt-2 rounded mb-4">
             Monthly Goals
           </h2>
 

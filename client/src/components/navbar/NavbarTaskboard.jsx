@@ -21,8 +21,11 @@ function NavbarTaskboard() {
 
   const links = (
     <div className="flex gap-y-5 flex-col ">
-      <NavLink
 
+      <NavLink
+ className={({ isActive }) =>
+          isActive ? "text-blue-500" : "text-white"
+        }
         to={"/taskboard"}
       >
         Task Board
