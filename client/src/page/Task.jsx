@@ -15,7 +15,9 @@ function Task() {
   // polish input task , update real timetask 
   // text
   // gave password and email sign in and up
-  // loading 
+  // loading
+  // solved input form 
+  
 
 
 
@@ -229,14 +231,14 @@ function Task() {
             <input
               {...register("title", { required: true })}
               placeholder="Enter your title"
-              className="border px-2 py-1 w-full"
+              className="border px-2 py-1 w-full rounded border-black/20"
             />
 
             {errors.title && <p className="text-red-400">Enter title</p>}
             <textarea
               {...register("description", { required: true })}
               placeholder="Enter your descruption"
-              className="border px-2  w-full min-h-20"
+              className="border px-2  w-full min-h-20  rounded border-black/20"
             />
             {errors.description && (
               <div className="text-red-400">Enter Description</div>
@@ -244,7 +246,7 @@ function Task() {
 
             <select
               {...register("frequency", { required: true })}
-              className="border px-2 py-1 w-full"
+              className="border px-2 py-1 w-full  rounded border-black/20"
             >
               <option value="Daily">Daily</option>
               <option value="Weekly">Weekly</option>
@@ -255,11 +257,11 @@ function Task() {
             )}
 
             <div className="modal-action">
-              <button type="submit" htmlFor="my_modal_6" className="btn">
+              <button type="submit" htmlFor="my_modal_6" className="btn btn-primary text-white">
                 Submit
               </button>
 
-              <button className="btn" onClick={modalcancel}>
+              <button className="btn btn-warning text-white" onClick={modalcancel} >
                 Cancel
               </button>
             </div>
