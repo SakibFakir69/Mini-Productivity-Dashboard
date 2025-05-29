@@ -5,21 +5,16 @@ import { ToastContainer, toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
 import api from "../hooks/PrivateAPi";
 function Task() {
-
-
   // refresh  task auto update
-  // active link 
+  // active link
   // all function check
-  // bug fix 
+  // bug fix
   // remove google
-  // polish input task , update real timetask 
+  // polish input task , update real timetask
   // text
   // gave password and email sign in and up
   // loading
-  // solved input form 
-  
-
-
+  // solved input form
 
   const { user } = useAuth();
 
@@ -98,8 +93,7 @@ function Task() {
   //   filter
   const weeklytasks = tasks.filter((item) => item.frequency === "Weekly");
   const monthlytasks = tasks.filter((item) => item.frequency === "Monthly");
-  const dailytasks = tasks.filter((item)=> item.frequency==='Daily');
-
+  const dailytasks = tasks.filter((item) => item.frequency === "Daily");
 
   //   iscompleted
   const handleCompleteToggle = (id, currentStatus) => {
@@ -172,7 +166,6 @@ function Task() {
       frequency,
       email: user?.email,
     };
-
 
     api
       .post("api/tasks", alldata)
@@ -257,11 +250,18 @@ function Task() {
             )}
 
             <div className="modal-action">
-              <button type="submit" htmlFor="my_modal_6" className="btn btn-primary text-white">
+              <button
+                type="submit"
+                htmlFor="my_modal_6"
+                className="btn btn-primary text-white"
+              >
                 Submit
               </button>
 
-              <button className="btn btn-warning text-white" onClick={modalcancel} >
+              <button
+                className="btn btn-warning text-white"
+                onClick={modalcancel}
+              >
                 Cancel
               </button>
             </div>
@@ -270,17 +270,22 @@ function Task() {
       </div>
 
       <section className="grid md:grid-cols-3 gap-5 ">
-
-
         <div className="border border-teal-300/10">
           <div>
-            <h2 className="text-white font-semibold text-center mb-4">Daily task</h2>
+            <h2 className="text-white font-semibold text-center mb-4">
+              Daily task
+            </h2>
           </div>
 
           {/*  */}
 
           <div>
-             <div className="grid grid-cols-1 gap-y-4 rounded p-3">
+            <div className="grid grid-cols-1 gap-y-4 rounded p-3">
+                {dailytasks.length === 0 && (
+                        <p className="text-gray-400 text-center">
+                          No daily tasks found
+                        </p>
+                      )}
               {dailytasks.map((item, key) => (
                 <div
                   className="border   min-h-20  bg-slate-900 shadow-2xl border-teal-400/20 rounded p-5"
@@ -327,6 +332,9 @@ function Task() {
                     </div>
                   ) : (
                     <div className="flex flex-col ">
+                      
+                    
+
                       <p className="text-white font-semibold">{item.title}</p>
                       <p className="text-stone-200">{item.description}</p>
                       <input
@@ -356,16 +364,8 @@ function Task() {
                 </div>
               ))}
             </div>
-            
           </div>
-
         </div>
-
-
-
-
-
-
 
         <div className="border border-teal-400/10 p-3">
           <h2 className="text-white font-xl font-semibold text-center mb-4">
@@ -419,7 +419,9 @@ function Task() {
                   </div>
                 ) : (
                   <div className="flex flex-col gap-x-5">
-                    <p className="text-white font-semibold text-xl">{item.title}</p>
+                    <p className="text-white font-semibold text-xl">
+                      {item.title}
+                    </p>
                     <p className="text-stone-200">{item.description}</p>
 
                     <input

@@ -199,7 +199,7 @@ app.post('/api/tasks', async (req, res) => {
 
 // show tasks
 
-app.get('/api/tasks/:email', privateRoute, async (req, res) => {
+app.get('/api/tasks/:email', async (req, res) => {
 
     const userEmail = req.params.email;
     console.log(userEmail);
