@@ -16,9 +16,9 @@ A simple full-stack web app to help users track daily tasks, set weekly/monthly 
 
 ## Tech Stack
 
-- **Frontend:** React.js, React Router, React Query, Tailwind CSS, React Hook Form  
+- **Frontend:** React.js, React Router, , Tailwind CSS, React Hook Form  
 - **Backend:** Node.js, Express.js, MongoDB (Mongoose), JWT Authentication  
-- **Deployment:** Vercel/Netlify (frontend), Render/Heroku (backend)
+- **Deployment:** Vercel/Netlify 
 
 ---
 
