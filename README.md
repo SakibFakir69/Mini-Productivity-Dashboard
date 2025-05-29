@@ -10,7 +10,7 @@ A simple full-stack web app to help users track daily tasks, set weekly/monthly 
 - Manage daily tasks (add, edit, delete, mark complete)  
 - Manage goals (weekly/monthly)  
 - Display motivational quotes fetched from a public API  
-- Bonus: drag-and-drop task reordering and dark/light mode toggle (optional)  
+
 
 ---
 
@@ -55,16 +55,16 @@ root
 ### 1. Backend Setup
 
 ```bash
+
 cd server
-npm install
+npm install dotenv cors jsonwebtoken express mongoose mongodb
 
 
 
 Create a .env file in server folder:
 
 env
-Copy
-Edit
+
 
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
@@ -73,9 +73,8 @@ JWT_SECRET=your_jwt_secret_key
 
 
 . Frontend Setup
-bash
-Copy
-Edit
+
+
 cd client
 npm install
 ```
