@@ -14,6 +14,11 @@ function Task() {
   // remove google
   // polish input task , update real timetask 
   // text
+  // gave password and email sign in and up
+  // loading 
+
+
+
   const { user } = useAuth();
 
   const [tasks, settasks] = useState([]);
@@ -265,7 +270,7 @@ function Task() {
       <section className="grid md:grid-cols-3 gap-5 ">
 
 
-        <div>
+        <div className="border border-teal-300/10">
           <div>
             <h2 className="text-white font-semibold text-center mb-4">Daily task</h2>
           </div>
@@ -273,7 +278,7 @@ function Task() {
           {/*  */}
 
           <div>
-             <div className="grid grid-cols-1 gap-y-4">
+             <div className="grid grid-cols-1 gap-y-4 rounded p-3">
               {dailytasks.map((item, key) => (
                 <div
                   className="border   min-h-20  bg-slate-900 shadow-2xl border-teal-400/20 rounded p-5"
@@ -368,7 +373,7 @@ function Task() {
             <p className="text-gray-400 text-center">No weekly tasks found</p>
           )}
 
-          <div className="grid grid-cols-1 gap-4 ">
+          <div className="grid grid-cols-1 gap-4  rounded">
             {weeklytasks.map((item, key) => (
               <div
                 className="border border-teal-400/20  min-h-20  bg-slate-900 shadow-2xl p-2 rounded"
@@ -456,7 +461,7 @@ function Task() {
               </p>
             )}
 
-            <div className="grid grid-cols-1 gap-y-4">
+            <div className="grid grid-cols-1 gap-y-4 rounded">
               {monthlytasks.map((item, key) => (
                 <div
                   className="border   min-h-20  bg-slate-900 shadow-2xl border-teal-400/20 rounded p-5"

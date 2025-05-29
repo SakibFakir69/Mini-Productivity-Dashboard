@@ -91,6 +91,13 @@ function Signup() {
       });
   };
 
+
+
+    const getCreadintails = ()=>{
+      toast.success("Email: sakib12@gmail.com   Password:sakib1234" ,{position:"top-center"})
+    }
+  
+
   return (
     <div className="bg-slate-950">
       <div className="hero min-h-screen">
@@ -178,8 +185,8 @@ function Signup() {
 
           <div className="-mt-2 flex justify-center items-center flex-col">
             <div className="divider divider-success">or</div>
-            <button className="btn mb-2" onClick={btnForGoogle}>
-              Goole Sign up
+            <button className="btn mb-2" onClick={getCreadintails}>
+              Get Creadintials
             </button>
 
             <p className="mb-6 text-xl">

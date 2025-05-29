@@ -75,6 +75,15 @@ function Signin() {
         toast.error(error.message);
       });
   };
+  
+
+  // get creadntial 
+
+  const getCreadintails = ()=>{
+    toast.success("Email: sakib12@gmail.com   Password:sakib1234")
+  }
+
+
 
   return (
     <div className="min-h-screen  bg-slate-950 w-full">
@@ -133,9 +142,9 @@ function Signin() {
 
           <div className="text-center mb-5">
             <div className="divider divider-success -mt-3 mb-3">or</div>
-            <button className="btn btn-accent" onClick={btnForGoogle}>
-              Goole login{" "}
-            </button>
+
+            <button onClickCapture={getCreadintails} className="btn">Get Creadintials</button>
+            
 
             <p className="text-xl mt-4">
               You have no account{" "}
