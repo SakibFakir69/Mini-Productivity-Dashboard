@@ -4,6 +4,13 @@ A simple full-stack web app to help users track daily tasks, set weekly/monthly 
 
 ---
 
+
+## 📸 Screenshot
+
+Here's a preview of the  Mini Productivity Dashboard
+
+![AI Chat UI Preview](https://i.ibb.co/R4yCh1R3/Screenshot-2025-05-29-190249.png)
+
 ## Features
 
 - User registration and login with JWT authentication  
